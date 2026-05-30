@@ -1,0 +1,61 @@
+name: Compile MedusaKernelProject 32-bit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  kernel-compiler:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Copy kernel sources
+      uses: actions/checkout@v4
+
+    - name: Set up dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential bc bison flex libssl-dev libcrypto++-dev u-boot-tools libelf-dev crossbuild-essential-armhf libncurses5-dev wget tar libfl-dev
+        sudo apt-get install -y python2
+        sudo ln -sf /usr/bin/python2 /usr/bin/python
+
+    - name: Get GCC
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/toolchains
+        cd $GITHUB_WORKSPACE/toolchains
+        wget -q https://releases.linaro.org/components/toolchain/binaries/4.9-2017.01/arm-linux-gnueabi/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabi.tar.xz
+        tar -xf gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabi.tar.xz
+        mv gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabi arm32
+
+    - name: Compile kernel (ARM 32-bit)
+      run: |
+        export ARM32_PATH=$GITHUB_WORKSPACE/toolchains/arm32/bin
+        export PATH=$ARM32_PATH:$PATH
+        export ARCH=arm
+        export CROSS_COMPILE=arm-linux-gnueabi-
+        
+        export PLATFORM_VERSION=10
+        export PLATFORM_SDK_VERSION=29
+        
+        make clean && make mrproper
+        
+        # Чистый дефконфиг без лишних аргументов, которые ломают скрипт
+        make j4primelte_defconfig O=out
+          
+        # Синхронизация
+        make O=out syncconfig || make O=out silentoldconfig
+        
+        # Погнали нахуй!
+        make -j$(nproc) O=out \
+          CROSS_COMPILE=arm-linux-gnueabi- \
+          HOSTCFLAGS="-fcommon" \
+          HOSTCXXFLAGS="-fcommon" \
+          KCFLAGS="-w" \
+          WERROR=0
+
+    - name: Выгружаем готовое ядро
+      uses: actions/upload-artifact@v4
+      with:
+        name: Medusa-Kernel-J4Plus-32bit
+        path: |
+          out/arch/arm/boot/zImage-dtb
+          out/arch/arm/boot/zImage
