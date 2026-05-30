@@ -38,13 +38,10 @@ jobs:
         
         make clean && make mrproper
         
-        # Чистый дефконфиг без лишних аргументов, которые ломают скрипт
         make j4primelte_defconfig O=out
-          
-        # Синхронизация
+        
         make O=out syncconfig || make O=out silentoldconfig
         
-        # Погнали нахуй!
         make -j$(nproc) O=out \
           CROSS_COMPILE=arm-linux-gnueabi- \
           HOSTCFLAGS="-fcommon" \
@@ -52,7 +49,7 @@ jobs:
           KCFLAGS="-w" \
           WERROR=0
 
-    - name: Выгружаем готовое ядро
+    - name: Outputting the finished kernel
       uses: actions/upload-artifact@v4
       with:
         name: Medusa-Kernel-J4Plus-32bit
