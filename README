@@ -1,11 +1,12 @@
-A fork of the MedusaKenrelProject
+A fork of the MedusaKenrelProject, based on the AnyKenrel3 package
 
 Author of this fork/repository/kernel is not responsible for any damage caused by this modifications.
 
-Why;
+Why did i make it;
 - Overclock CPU
 - Compile it
 - Get some experience
+- Let everyone else download it too comfortably (All links i found were dead, instead of this one)
 
 How to install;
 MODDED;
@@ -28,5 +29,13 @@ Recommendations;
 - 3/32GB version
 
 !IMPORTANT!
+Magisk isn't perfectly compatable with the MedusaKenrel.
+From my experience;
+First, flash magisk v23 via .zip
+Second, flash medusa kenrel via .zip
 
-If you want to flash magisk as well, please use the v23 .zip way, otherwise it will most likely bootloop or hang on splash
+Now you can safely update both magisk (via app) and medusakenrel (via zip)
+
+Otherwise it wont work!
+
+"If you can't find something, make it yourself" - A wise person
