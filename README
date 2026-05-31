@@ -26,3 +26,7 @@ Requirements;
 Recommendations;
 - Good binning
 - 3/32GB version
+
+IMPORTANT!
+
+If you want to flash magisk as well, please use the v23 .zip way, otherwise it will most likely bootloop or hang on splash
