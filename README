@@ -3,17 +3,12 @@ A fork of the MedusaKenrelProject, based on the AnyKenrel3 package
 Author of this fork/repository/kernel is not responsible for any damage caused by this modifications.
 
 Why did i make it;
-- Overclock CPU
+- Overclock CPU (Actually no, i lost access to my j4+ and couldnt figure out how to properly implement the dtb)
 - Compile it
 - Get some experience
 - Let everyone else download it too comfortably (All links i found were dead, instead of this one)
 
 How to install;
-MODDED;
-- Grab the latest "medusa-modded.zip" from releases
-- Flash
-- Enjoy
-UNODDED;
 - Grab the latest "medusa-unmodded.zip" from releases
 - Flash
 - Enjoy
